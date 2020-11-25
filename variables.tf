@@ -3,7 +3,7 @@ variable "domain_name" {
   type        = string
 }
 
-variable "zone_public_id" {
-  description = "The public ID of the DNS zone"
+variable "route53_zone_public_id" {
+  description = "The public ID of the route53 zone"
   type        = string
 }
