@@ -1,3 +1,8 @@
+data "aws_route53_zone" "public" {
+  name         = var.domain_name
+  private_zone = false
+}
+
 # This creates an SSL certificate
 resource "aws_acm_certificate" "myapp" {
   domain_name       = var.domain_name
@@ -19,7 +24,7 @@ resource "aws_route53_record" "cert_validation" {
   name            = tolist(aws_acm_certificate.myapp.domain_validation_options)[0].resource_record_name
   records         = [tolist(aws_acm_certificate.myapp.domain_validation_options)[0].resource_record_value]
   type            = tolist(aws_acm_certificate.myapp.domain_validation_options)[0].resource_record_type
-  zone_id         = var.route53_zone_public_id
+  zone_id         = data.aws_route53_zone.public.id
   ttl             = 60
 }
 
